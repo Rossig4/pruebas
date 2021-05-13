@@ -12,14 +12,26 @@ const getState = ({ getStore, getActions, setStore }) => {
 					background: "white",
 					initial: "white"
 				}
-			]
+            ];
+            personajes: [],
+            planetas: [],
+            favoritos: [],
+            detalles: [null]
 		},
 		actions: {
 			// Use getActions to call a function within a fuction
 			exampleFunction: () => {
 				getActions().changeColor(0, "green");
 			},
-			loadSomeData: () => {
+			loadSomeData: async () => {
+                try {
+                    const res = await fetch("https://www.swapi.tech/api/people");
+                    const data = await res.json()
+
+                    setStore({ personajes: data.results });
+                } catch (error) {
+                    
+                }
 				/**
 					fetch().then().then(data => setStore({ "foo": data.bar }))
 				*/
